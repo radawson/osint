@@ -280,7 +280,7 @@ python3 -m pip install redditsfinder -U
 python3 -m pip install streamlink -U
 python3 -m pip install waybackpy -U
 
-wget https://raw.githubusercontent.com/rdbh/osint/dev_rick/install/jupyter-install.sh
+cd "${HOME}"/osint/install
 sudo jupyter-install.sh
 rm jupyter-install.sh
 

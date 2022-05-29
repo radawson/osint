@@ -4,7 +4,7 @@
 # (c) 2021 Richard Dawson
 
 # Get jupyter path variable from osint.conf
-JUP_PATH=$(cat config | grep JUP_PATH | cut -c 10-) 
+JUP_PATH=$(cat osint.config | grep JUP_PATH | cut -c 10-) 
 
 if [ ! -d "$JUP_PATH/tools" ]; then
 	echo "Creating templates directory at ${JUP_PATH}/tools"
