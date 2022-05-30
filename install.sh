@@ -153,6 +153,17 @@ python3 -m pip install -r requirements.txt
 mkdir -p $DOC_PATH/WhatsMyName
 }
 
+pause_for () {
+  COUNT=${2}
+  printf "${1}" | tee /dev/fd/3
+  while [ ${COUNT} -gt 0 ]; do 
+    printf "${COUNT}" | tee /dev/fd/3
+	for (( i=0; i<=${#COUNT}; i++ )); do
+	  printf "\b" | tee /dev/fd/3
+	done
+  done
+}
+
 python_install () {
 # Used to install python tools in the tools directory
 cd $BIN_PATH
@@ -220,12 +231,9 @@ else
   OS_NAME=$(lsb_release -a | grep '^Distributor' | cut -c 17-)
 fi
 
-echo "Installing for ${OS_NAME}"
-read -n1 -p "Press Q to quit or [Enter] to continue" INSTALL_Q
-if [[ "${INSTALL_Q}" == 'Q' ]] || [[ "${INSTALL_Q}" == 'q' ]];then
-  echo "Quitting Script"
-  exit 5
-fi
+printf "Installing for ${OS_NAME}" | tee /dev/fd/3 
+printf "Ctrl-C to abort" | tee /dev/fd/3
+pause_for "Ctrl-C to abort" 9
 
 # Create config file
 touch ~/osint.config
