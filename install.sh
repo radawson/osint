@@ -9,12 +9,15 @@ BIN_PATH=${HOME}/Downloads/Programs
 DOC_PATH=${HOME}/Documents/osint
 JUP_PATH=/usr/share/jupyter
 
+BRANCH="main"							# Default to main branch
+DATE_VAR=$(date +'%y%m%d-%H%M')			# Today's Date and time
+LOG_FILE="${DATE_VAR}_osint_install.log"  	# Log File name
+
 ## Functions
 
 check_root() {
   # Check to ensure script is not run as root
   if [[ "${UID}" -eq 0 ]]; then
-    UNAME=$(id -un)
     printf "\nThis script should not be run as root.\n\n" >&2
     usage
   fi
@@ -159,9 +162,54 @@ cd ${1}
 python3 -m pip install "${1}" -U
 }
 
-#-------------------
-# MAIN
-#-------------------
+usage() {
+  echo "Usage: ${0} [-cfh] [-p VPN_name] " >&2
+  echo "Sets up Kali with useful OSINT apps."
+  #echo "Do not run as root."
+  echo
+  echo "-c 			Check internet connection before starting."
+  echo "-f			Install Flatpak."
+  echo "-h 			Help (this list)."
+  echo "-p VPN_NAME	Install VPN client(s) or 'all'."
+  echo "-v 			Verbose mode."
+  exit 1
+}
+
+## MAIN
+# Create a log file with current date and time
+touch ${LOG_FILE}
+
+# Provide usage statement if no parameters
+while getopts dfhv OPTION; do
+  case ${OPTION} in
+	d)
+	# Set installation to dev branch
+	  BRANCH="dev"
+	  echo_out "Branch set to dev branch"
+	  ;;
+	f)
+	# Flag for flatpak installation (not in use currently)
+	  PACKAGE="flatpak"
+	  echo_out "Flatpak use set to true"
+	  install_flatpak
+	  ;;  
+	h)
+	  usage
+	  ;;
+	v)
+      # Verbose is first so any other elements will echo as well
+      VERBOSE='true'
+      echo_out "Verbose mode on."
+      ;;
+    ?)
+      echo "invalid option" >&2
+      usage
+      ;;
+  esac
+done
+
+# Redirect outputs
+exec 3>&1 1>>${LOG_FILE} 2>&1
 
 # Get OS distribution
 if [[ "${1}" == "Kali" ]]; then 
@@ -289,7 +337,7 @@ rm jupyter-install.sh
 cd $BIN_PATH
 git clone https://github.com/radawson/petereport
 cd petereport
-export DOCKER_BUILDKIT=1
+#export DOCKER_BUILDKIT=1
 sudo docker-compose up --build
 
 sudo apt-get -y autoremove
