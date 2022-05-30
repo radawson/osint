@@ -153,8 +153,9 @@ mkdir -p $DOC_PATH/WhatsMyName
 python_install () {
 # Used to install python tools in the tools directory
 cd $BIN_PATH
-mkdir $1
+mkdir ${1}
 cd ${1}
+
 python3 -m pip install "${1}" -U
 }
 
@@ -286,8 +287,9 @@ rm jupyter-install.sh
 
 # Install PeTeReport
 cd $BIN_PATH
-git clone https://github.com/1modm/petereport
+git clone https://github.com/radawson/petereport
 cd petereport
+export DOCKER_BUILDKIT=1
 sudo docker-compose up --build
 
 sudo apt-get -y autoremove
