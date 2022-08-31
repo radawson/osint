@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # v1.1.0
 
 zenity --info --text="The next window will prompt you for a target media file. Click "Cancel" if entering a stream URL." --title="Video Utilities" --width=200

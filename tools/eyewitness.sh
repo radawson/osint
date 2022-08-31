@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # V1.1.0
 
 opt1="Single URL"

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 opt1="Amass"
 opt2="Sublist3r"
 opt3="Photon"

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # v1.1.0
 
 DOC_PATH=$(cat config | grep DOC_PATH | cut -c 10-)

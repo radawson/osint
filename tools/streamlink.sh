@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # v1.1.0
 
 opt1="Display Live Stream"

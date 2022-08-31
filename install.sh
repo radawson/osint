@@ -77,6 +77,7 @@ mkdir -p $DOC_PATH/EyeWitness
 install_google_earth () {
 cd $BIN_PATH
 mkdir google-earth && cd google-earth
+wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 wget https://dl.google.com/dl/earth/client/current/google-earth-stable_current_amd64.deb
 sudo dpkg -i google-earth-stable*.deb
 cd $BIN_PATH
